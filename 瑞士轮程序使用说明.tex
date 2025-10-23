@@ -1,0 +1,313 @@
+% filepath: c:\Users\lixiang\Desktop\国际象棋社团\瑞士轮程序使用说明.tex
+\documentclass[12pt]{ctexart}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usepackage{hyperref}
+\hypersetup{colorlinks=true,linkcolor=blue,urlcolor=blue,citecolor=blue}
+\usepackage{enumitem}
+\usepackage{graphicx}
+\usepackage{longtable}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{xcolor}
+\usepackage{listings}
+
+% --- 解决 listings 语言错误：定义 json 与 bash 语言 ---
+\lstdefinelanguage{json}{
+  basicstyle=\ttfamily\small,
+  numbers=left, numbersep=6pt, stepnumber=1,
+  showstringspaces=false, breaklines=true,
+  morestring=[b]", stringstyle=\color{brown!70!black},
+  morecomment=[l]{//}, commentstyle=\color{gray!80!black},
+  literate=
+   *{:}{{{\color{black}:}}}{1}
+    {,}{{{\color{black},}}}{1}
+    {\{}{{{\color{black}\{}}}}{1}
+    {\}}{{{\color{black}\}}}}{1}
+    {[}{{{\color{black}[}}}{1}
+    {]}{{{\color{black}]}}}{1}
+}
+
+\lstdefinelanguage{bash}{
+  morekeywords={sudo,pip,python,xelatex,dir,cd},
+  sensitive=false,
+  morecomment=[l]{\#},
+  morestring=[b]",
+}
+
+\lstset{
+  basicstyle=\ttfamily\small,
+  breaklines=true,
+  frame=single,
+  keywordstyle=\bfseries\color{blue},
+  commentstyle=\itshape\color{gray!80!black},
+  columns=flexible
+}
+
+\title{国际象棋瑞士轮比赛管理程序 说明与用法（详细版）}
+\author{国际象棋社团}
+\date{\today}
+
+\begin{document}
+\maketitle
+\tableofcontents
+
+\section{简介}
+本程序用于管理国际象棋瑞士轮赛事的全流程：比赛设置、选手录入（手动/Excel）、自动配对、结果录入与回退、自动排名（含 SB 小分）、团体排名（取最佳 N 人）、图表导出与 PDF 汇总、以及比赛状态的断点保存与恢复。程序在每轮两个关键时刻自动保存状态，发生中断时可从 JSON 状态文件恢复继续。
+
+\section{运行环境与依赖}
+\begin{itemize}[leftmargin=1.6em]
+  \item 操作系统：Windows 10/11（推荐）
+  \item Python：3.8 及以上
+  \item 依赖库：\texttt{matplotlib}（图表、PDF）、\texttt{openpyxl}（Excel）
+\end{itemize}
+安装命令：
+\begin{lstlisting}[language=bash]
+pip install matplotlib openpyxl
+\end{lstlisting}
+
+\section{术语与判定}
+\begin{itemize}[leftmargin=1.6em]
+  \item SB 小分（Sonneborn–Berger）：胜加对手总分，和加对手总分一半，负与 BYE 不加。
+  \item 颜色平衡：白棋次数减黑棋次数，正为白多、负为黑多，0 为均衡。
+  \item BYE（轮空）：当轮有效人数为奇数时产生，记 1 分，不计缺席。
+  \item 缺席串：连续缺席轮数（仅当台次被判缺席时计入，BYE 与“对手缺席”不算缺席）。
+  \item DQ（取消资格）：同一选手连续两轮缺席触发，支持“本轮结束后生效”。
+\end{itemize}
+
+\section{快速开始}
+\begin{enumerate}[leftmargin=1.6em]
+  \item 进入程序目录运行：
+\begin{lstlisting}[language=bash]
+python 国际象棋比赛使用（瑞士轮）.py
+\end{lstlisting}
+  \item 选择是否从“状态文件”恢复（JSON）。
+  \item 未恢复时，依次完成：比赛设置 → 选手录入（手动或 Excel）。
+  \item 每轮流程：
+  \begin{enumerate}
+    \item 生成对阵表（导出 PNG），自动保存“对阵后”状态（JSON）。
+    \item 逐台录入结果（可查看排名/团体、支持撤销重录）。
+    \item 显示“本轮后个人排名”，应用挂起 DQ（若设置为轮后生效），导出结果/排名图，保存“排名后”状态（JSON）。
+    \item 生成当轮 PDF（对阵、结果、当轮后个人总排名、可选团体）。
+  \end{enumerate}
+  \item 比赛结束：导出个人战绩图、最终个人/团体排名，生成两种总 PDF 汇总。
+\end{enumerate}
+
+\section{Excel 导入}
+\subsection*{样板与列说明}
+\begin{longtable}{p{3cm}p{11cm}}
+\toprule
+列名 & 说明 \\
+\midrule
+编号 & 可选；用于 \texttt{player.number}，重复自动重排 \\
+姓名 & 必填；自动处理重名（追加 \texttt{(2)/(3)...}） \\
+队伍 & 可选；启用团体时用于统计 \\
+性别 & 可选；显示用途 \\
+组别 & 可选；显示用途 \\
+\bottomrule
+\end{longtable}
+建议通过程序生成样板 \texttt{.xlsx} 后填写导入。
+
+\section{配对与计分规则（详解）}
+\subsection{配对流程}
+\begin{enumerate}[leftmargin=1.6em]
+  \item 非首轮：将未 DQ 的选手按积分分组，高分组优先配对。
+  \item 组内优先两两配对；配不全向最近的低分组借人（优先高分的低分组）。
+  \item 若当轮有效人数为奇数：\textbf{预选 BYE}（优先未轮空、分数最低；同分随机），并从配对池剔除；剩余选手为偶数。
+  \item 兜底策略（逐步放宽）：不同队且未交手 → 允许同队 → 允许重赛 → 同时放宽 → 最终相邻配对。
+\end{enumerate}
+
+\subsection{避免二次 BYE}
+\begin{itemize}[leftmargin=1.6em]
+  \item 通过“预选 BYE 并剔除”，避免在兜底阶段再次产生 BYE。
+  \item 如所有人均已轮空，可能不可避免产生二次 BYE，程序会给出提示。
+\end{itemize}
+
+\subsection{颜色分配}
+对每对选手计算颜色平衡（白数-黑数）：白多者优先执黑、黑多者优先执白；平衡相同随机。
+
+\subsection{计分与排名（细则）}
+本程序对个人排名采用一组“由高到低”的排序键（Tie-breakers），依次为：
+\[\textbf{总分} \ \Rightarrow\  \textbf{SB 小分}\ \Rightarrow\ \textbf{直胜}\ (\text{占位})\ \Rightarrow\  \textbf{对手分}\ \Rightarrow\ \textbf{胜局数}\]
+当上一级完全相同，才比较下一级；直到分出先后为止。
+
+\paragraph{1) 总分（Points, 记为 P）}
+- 规则：胜 1 分、和 0.5 分、负 0 分；BYE 计 1 分。  
+- 含义：某选手在“当前轮次为止”的累计积分。  
+
+\paragraph{2) SB 小分（Sonneborn–Berger, 记为 SB）}
+- 定义：对该选手已完成的每一局（不含 BYE），若胜则加“该局对手的当前总分”，若和则加“该局对手当前总分的一半”，负不加。记作：
+\[\begin{aligned}
+SB(p)=\sum_{m\in \mathcal{M}_p}
+\begin{cases}
+S(\text{opp}(m)) & \text{若胜}\\[2pt]
+\frac{1}{2}\,S(\text{opp}(m)) & \text{若和}\\[2pt]
+0 & \text{若负}
+\end{cases}
+\end{aligned}\]
+其中 \(\mathcal{M}_p\) 为选手 p 的“非 BYE”对局集合，\(S(\cdot)\) 为对手在当前轮次的累计总分。  
+- 处理：BYE 不计入 SB；“对手缺席判胜”视作胜，对手仍是具体选手，计入其当前总分。  
+- 时间性：在“第 n 轮后”排名时，使用对手“此时”的总分（动态值）。
+
+\paragraph{3) 直胜（Head-to-Head, 记为 H2H）}
+- 当前实现：占位，恒为 0，不影响排序结果（留作扩展）。  
+- 推荐规则（供裁判参考）：当若干名选手在更高优先级完全相同，可只取这些并列选手，比较他们之间的\textbf{小循环}对战积分（或净胜分）决定先后；如发生环（A 胜 B、B 胜 C、C 胜 A），可继续使用下一级 Tie-break。
+
+\paragraph{4) 对手分（Opponents’ Total, 记为 OPP）}
+- 定义：将该选手所有“非 BYE 对手”的“当前总分”相加：
+\[\begin{aligned}
+OPP(p)=\sum_{o\in \mathcal{O}_p} S(o)
+\end{aligned}\]
+其中 \(\mathcal{O}_p\) 为 p 的对手集合（含重赛则重复计入），BYE 不计入。  
+- 说明：本程序实现为“对手总分和”的简化 Buchholz，不做中位裁剪（Median）与最低分剔除（Cut）。发生重赛时，同一对手会按实际对局次数重复计入。
+
+\paragraph{5) 胜局数（Wins, 记为 W）}
+- 定义：该选手在当前轮次为止的胜局数量（含“对手缺席判胜”，不含 BYE）。
+
+\paragraph{并列完全相同时的处理}
+- 若 P、SB、H2H、OPP、W 五项均完全相同，则保持程序的稳定排序顺序（实现细节：Python 稳定排序会保留原顺序），不再额外拆分。  
+- 排名号依次递增（即不采用“并列名次共享同一名次号”的记法）。
+
+\paragraph{特殊与边界情况}
+- BYE：计 1 分；不计入 SB 与 OPP。  
+- 缺席与对手缺席：缺席方记 0 分并累积“缺席串”；对手缺席的胜者记 1 分，并计入 SB/OPP（对手仍为实际选手）。  
+- DQ（取消资格）：被 DQ 选手仍保留在列表与对局历史中，其既有成绩会影响对手的 SB 与 OPP；DQ 后不再参与后续配对。  
+- 计算时点：所有 Tie-break 均以“第 n 轮后”的当前总分为基准动态计算。
+
+\paragraph{实现对应}
+程序内部的排序键为（按从高到低）：
+\[(\,P,\ SB,\ H2H,\ OPP,\ W\,)\]
+其中当前版本 \(H2H=0\)。代码对应：
+\begin{itemize}[leftmargin=1.6em]
+  \item 总分：\verb|player.score|
+  \item SB：\verb|player.sonneborn_berger|（按当前对手分计算）
+  \item 直胜：\verb|get_head_to_head(player)|（占位返回 0）
+  \item 对手分：遍历 \verb|player.opponents| 累加对手 \verb|score|（忽略 “BYE”）
+  \item 胜局数：\verb|player.wins|
+\end{itemize}
+
+\paragraph{简短示例}
+假设第 3 轮后有三名选手 A/B/C，总分均为 2.0：  
+- A 的对手为 D（胜，D 当前 1.5）、E（和，E 当前 2.0）、F（负，F 当前 2.5）。  
+  \(\Rightarrow SB(A)=1.5 + 0.5\times 2.0 + 0 = 2.5\)；\(OPP(A)=1.5+2.0+2.5=6.0\)。  
+- B 的对手为 D（和，1.5）、E（胜，2.0）、G（负，1.0）。  
+  \(\Rightarrow SB(B)=0.5\times1.5 + 2.0 + 0 = 2.75\)；\(OPP(B)=1.5+2.0+1.0=4.5\)。  
+- C 的对手为 H（胜，1.0）、I（和，1.0）、J（负，3.0）。  
+  \(\Rightarrow SB(C)=1.0 + 0.5\times1.0 + 0 = 1.5\)；\(OPP(C)=1.0+1.0+3.0=5.0\)。  
+
+则三人按 SB 从高到低排序为 B（2.75）→ A（2.5）→ C（1.5）。若某两人 SB 相同，再比较 H2H（当前恒 0），再比较 OPP，仍相同则比较胜局数。
+
+\section{结果录入与修改}
+\subsection*{录入选项}
+\begin{itemize}[leftmargin=1.6em]
+  \item 1：白胜；2：黑胜；3：和棋；4：白缺（黑胜）；5：黑缺（白胜）
+\end{itemize}
+可撤销当轮某台次结果并重录；撤销后将自动刷新缺席串与待 DQ 队列（并在“即时生效”模式下回滚本轮误触发的 DQ）。
+
+\section{DQ 生效细则}
+\begin{itemize}[leftmargin=1.6em]
+  \item 触发条件：同一选手连续两轮缺席。
+  \item 生效模式：支持“本轮结束后生效”或“即时生效”。
+  \item 轮后生效流程：当轮展示排名后，统一应用挂起的 DQ（仅对后续轮次配对生效）。
+\end{itemize}
+
+\section{状态保存与恢复（JSON）}
+\subsection*{保存时机与命名}
+\begin{itemize}[leftmargin=1.6em]
+  \item 对阵后、录入前：\verb|<比赛名>_Rxx_对阵后_状态.json|（含 \verb|pending_pairings|）
+  \item 当轮排名后：\verb|<比赛名>_Rxx_排名后_状态.json|
+\end{itemize}
+
+\subsection*{关键字段}
+\begin{itemize}[leftmargin=1.6em]
+  \item \textbf{meta}：比赛、轮次、团体设置、DQ 模式、BYE 策略、输出目录、保存阶段
+  \item \textbf{players[]}：基本信息与 \verb|matches|（\verb|round/opponent/color/result/note|）
+  \item \textbf{pairings\_history[]}：各轮对阵与录入完成标记
+  \item \textbf{pending\_pairings}：当轮对阵（断点续录）
+  \item \textbf{pending\_disqualifications}：轮后待生效的 DQ 名单
+\end{itemize}
+
+\subsection*{JSON 示例}
+\begin{lstlisting}[language=json]
+{
+  "meta": {
+    "tournament_name": "校赛秋季赛",
+    "rounds": 5,
+    "current_round": 2,
+    "use_teams": true,
+    "team_top_n": 3,
+    "defer_disqualify": true,
+    "auto_bye_scoring": true,
+    "out_dir": "C:/.../校赛秋季赛_20241001_120000",
+    "stage": "pre"
+  },
+  "players": [
+    {
+      "name": "张三",
+      "team": "一队",
+      "number": 1,
+      "matches": [
+        {"round": 1, "opponent": "李四", "color": "W", "result": 1, "note": ""},
+        {"round": 2, "opponent": "BYE",  "color": null, "result": 1, "note": "BYE"}
+      ],
+      "disqualified": false, "dq_round": null, "bye": true
+    }
+  ],
+  "pairings_history": [
+    {"round": 1, "pairings": [["张三","李四","W"]], "entered": [true]}
+  ],
+  "pending_pairings": [["王五","赵六","B"], ["孙七","周八","W"]],
+  "pending_disqualifications": []
+}
+\end{lstlisting}
+
+\section{导出内容与命名规则}
+导出目录名包含：比赛名 +（可选）地点/组别后缀 + 时间戳。主要文件：
+\begin{itemize}[leftmargin=1.6em]
+  \item 每轮对阵表：\texttt{<比赛名>\_Rxx\_对阵表.png}
+  \item 每轮对局结果：\texttt{<比赛名>\_Rxx\_结果.png}
+  \item 每轮后个人总排名：\texttt{<比赛名>\_Rxx\_个人总排名.png}
+  \item 最终个人总排名：\texttt{<比赛名>\_00\_个人总排名.png}
+  \item 最终团体总排名：\texttt{<比赛名>\_01\_团体总排名.png}
+  \item 选手个人战绩图：\texttt{NN\_<比赛名>\_<选手名>.png}（NN 为两位数字）
+  \item 当轮结果 PDF：\texttt{<比赛名>\_Rxx\_当轮结果与排名.pdf}
+  \item 汇总 PDF：\texttt{<比赛名>\_瑞士轮汇总.pdf}、\texttt{<比赛名>\_总排名与对阵情况.pdf}
+\end{itemize}
+
+\section{输出目录结构示例}
+\begin{lstlisting}[language=bash]
+<比赛名>_<地点>_<组别>_<时间戳>/
+  <比赛名>_R01_对阵表.png
+  <比赛名>_R01_结果.png
+  <比赛名>_R01_个人总排名.png
+  01_<比赛名>_<选手甲>.png
+  02_<比赛名>_<选手乙>.png
+  ...
+  <比赛名>_00_个人总排名.png
+  <比赛名>_01_团体总排名.png
+  <比赛名>_R01_当轮结果与排名.pdf
+  <比赛名>_瑞士轮汇总.pdf
+  <比赛名>_总排名与对阵情况.pdf
+  <比赛名>_R01_对阵后_状态.json
+  <比赛名>_R01_排名后_状态.json
+\end{lstlisting}
+
+\section{常见问题与解决}
+\begin{itemize}[leftmargin=1.6em]
+  \item 列表语言报错（本文件）：确保文档前导包含对 \texttt{json}/\texttt{bash} 的 \lstinline|\lstdefinelanguage| 定义（已内置）。
+  \item \texttt{matplotlib}/\texttt{openpyxl} 未安装：按“运行环境与依赖”安装。
+  \item 中文显示异常：建议使用 XeLaTeX 编译本说明；程序端已设置中文字体（微软雅黑/黑体）。
+  \item 目录无法写入：检查权限或以管理员身份运行。
+  \item Excel 导入失败：确认存在“姓名”列且表头位于前 20 行内；编号列可留空。
+  \item 二次 BYE：预选 BYE 机制可避免大多数情况；如所有人已轮空，可能不可避免。
+\end{itemize}
+
+\section{编译本文档}
+\begin{itemize}[leftmargin=1.6em]
+  \item 推荐使用 \textbf{XeLaTeX}：
+\begin{lstlisting}[language=bash]
+xelatex 瑞士轮程序使用说明.tex
+\end{lstlisting}
+  \item \texttt{ctexart} 已适配中文环境，无需额外字体配置。
+\end{itemize}
+
+\end{document}
