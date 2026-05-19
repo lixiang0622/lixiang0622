@@ -1,9 +1,8 @@
 # 👋 你好, 我是 lixiang0622 
 
 <p align="center">
-  <img src="https://komarev.com/ghpvc/?user=lixiang0622&label=Profile%20views&color=0e75b6&style=flat" alt="访问量统计" />
+  <img src="https://profile-counter.glitch.me/lixiang0622/count.svg" alt="访问量统计" />
 </p>
-
 ### 🛰️ 探索者 | 空间物理专业学生 | 国际象棋爱好者
 
 我目前就读于 **中国科学技术大学 (USTC)**，我喜欢用代码解决复杂的问题，同时也热衷于在棋盘上博弈。
@@ -30,10 +29,9 @@
 ### 📊 GitHub 实验室报告
 
 <p align="center">
-  <img src="https://github-readme-stats.vercel.app/api?username=lixiang0622&show_icons=true&theme=tokyonight" alt="GitHub Stats" width="48%" />
-  <img src="https://github-readme-stats.vercel.app/api/top-langs/?username=lixiang0622&layout=compact&theme=tokyonight" alt="Top Langs" width="45%" />
+  <img src="https://github-readme-stats.cn/api?username=lixiang0622&show_icons=true&theme=tokyonight" alt="GitHub Stats" width="48%" />
+  <img src="https://github-readme-stats.cn/api/top-langs/?username=lixiang0622&layout=compact&theme=tokyonight" alt="Top Langs" width="45%" />
 </p>
-
 ---
 
 ### ♟️ 学习之外
