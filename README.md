@@ -1,7 +1,7 @@
 # 👋 你好, 我是 lixiang0622 
 
 <p align="center">
-  <img src="https://komarev.com/ghpvc/?user=[你的GitHub用户名]&label=Profile%20views&color=0e75b6&style=flat" alt="访问量统计" />
+  <img src="https://komarev.com/ghpvc/?user=lixiang0622&label=Profile%20views&color=0e75b6&style=flat" alt="访问量统计" />
 </p>
 
 ### 🛰️ 探索者 | 空间物理专业学生 | 国际象棋爱好者
