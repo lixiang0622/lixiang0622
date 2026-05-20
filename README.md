@@ -33,6 +33,7 @@
 
 ### 📫 如何找到我
 
+- **QQ:** `1638332963`
 - **Email:** `lixiang230742@mail.ustc.edu.cn`
 - **Blog:** https://icourse.club/user/10141
 - **lichess:** https://lichess.org/@/lixiang23
