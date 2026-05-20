@@ -9,9 +9,9 @@
 ### 🛠️ 我的技能树
 
 #### 💻 编程语言 & 工具
-- **科学计算:** ![Python](https://img.shields.io/badge/-Python-3776AB?style=flat&logo=python&logoColor=white) ![MATLAB](https://img.shields.io/badge/-MATLAB-e16711?style=flat) ![C++](https://img.shields.io/badge/-C++-00599C?style=flat&logo=c%2B%2B&logoColor=white)
-- **文档与排版:** ![LaTeX](https://img.shields.io/badge/-LaTeX-008080?style=flat&logo=latex&logoColor=white) 
-- **版本控制:** ![Git](https://img.shields.io/badge/-Git-F05032?style=flat&logo=git&logoColor=white)
+- **科学计算:** ![Python](https://img.shields.io/badge/-Python-3776AB?style=flat&logo=python&logoColor=white) ![MATLAB](https://img.shields.io/badge/-MATLAB-e16711?style=flat) ![C++](https://img.shields.io/badge/-C++-00599C?style=flat&logo=c%2B%2B&logoColor=white) ![C](https://img.shields.io/badge/-C-A8B9CC?style=for-the-badge&logo=c&logoColor=white) 
+- **文档与排版:** ![LaTeX](https://img.shields.io/badge/-LaTeX-008080?style=flat&logo=latex&logoColor=white) ![Typst](https://img.shields.io/badge/-Typst-2394AA?style=for-the-badge) ![Markdown](https://img.shields.io/badge/-Markdown-000000?style=for-the-badge&logo=markdown&logoColor=white) 
+- **版本控制与协作:** ![Git](https://img.shields.io/badge/-Git-F05032?style=for-the-badge&logo=git&logoColor=white) ![GitHub](https://img.shields.io/badge/-GitHub-181717?style=for-the-badge&logo=github&logoColor=white)
 
 
 ### 🚀 正在进行的项目
@@ -20,7 +20,7 @@
 | :--- | :--- | :--- |
 | **[Chess-Archive]** | 国际象棋协会数字化档案库 & 棋谱整理 | 📝 持续更新 |
 | **[Course-Notes]** | 课程资料整理 | 📝 持续更新 |
-
+| **[Tournament-Manager]** | 用于辅助社团线下比赛的积分与对阵工具 | 🛠️ 重构中 |
 
 ### ♟️ 学习之外
 
