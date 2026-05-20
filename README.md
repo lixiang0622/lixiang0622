@@ -1,9 +1,6 @@
 # 👋 你好, 我是 lixiang0622 
 
-<p align="center">
-  <img src="https://profile-counter.glitch.me/lixiang0622/count.svg" alt="访问量统计" />
-</p>
-### 🛰️ 探索者 | 空间物理专业学生 | 国际象棋爱好者
+🛰️ 探索者 | 空间物理专业学生 | 国际象棋爱好者
 
 我目前就读于 **中国科学技术大学 (USTC)**，我喜欢用代码解决复杂的问题，同时也热衷于在棋盘上博弈。
 
@@ -24,15 +21,6 @@
 | **[Chess-Archive]** | 国际象棋协会数字化档案库 & 棋谱整理 | 📝 持续更新 |
 | **[Course-Notes]** | 课程资料整理 | 📝 持续更新 |
 
----
-
-### 📊 GitHub 实验室报告
-
-<p align="center">
-  <img src="https://github-readme-stats.cn/api?username=lixiang0622&show_icons=true&theme=tokyonight" alt="GitHub Stats" width="48%" />
-  <img src="https://github-readme-stats.cn/api/top-langs/?username=lixiang0622&layout=compact&theme=tokyonight" alt="Top Langs" width="45%" />
-</p>
----
 
 ### ♟️ 学习之外
 
