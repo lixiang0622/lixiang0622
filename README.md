@@ -24,17 +24,18 @@
 
 ### ♟️ 学习之外
 
-我也是 **USTC 学生深蓝国际象棋协会** 的2025-2026年度社长。
+我也是 **USTC 学生深蓝国际象棋协会** 的2025-2026年度社长，2024-2025年度副社长。
 - 🏆 喜欢变体赛：**3-Check**, **Crazyhouse**, **Atomic**.
 - 📖 正在整理 2003 年建社以来的历史档案。
-- 🤝 欢迎在 Lichess 或 Chess.com 上找我切磋！
+- 🤝 欢迎在 lichess 上找我切磋！
 
 ---
 
 ### 📫 如何找到我
 
 - **Email:** `lixiang230742@mail.ustc.edu.cn`
-- **Blog:** https://icourse.club/user/10141 
+- **Blog:** https://icourse.club/user/10141
+- **lichess:** https://lichess.org/@/lixiang23
 - **Location:** 合肥, 中国
 
 <p align="center">
