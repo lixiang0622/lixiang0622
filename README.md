@@ -17,11 +17,6 @@
 
 <table align="center">
 [![Anurag's GitHub stats](https://github-readme-stats.vercel.app/api?lixiang0622=anuraghazra)](https://github.com/anuraghazra/github-readme-stats)
-  <tr>
-    <td align="center" style="border: none;">
-      <img src="https://github-readme-stats.cn/api/top-langs/?username=lixiang0622&layout=compact&theme=buefy" alt="Top Langs" width="400px" />
-    </td>
-  </tr>
 </table>
 
 ### 🚀 正在进行的项目
