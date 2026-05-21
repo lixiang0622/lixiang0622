@@ -28,6 +28,7 @@
 | **[Chess-Archive]** | 国际象棋协会数字化档案库 & 棋谱整理 | 📝 持续更新 |
 | **[Course-Notes]** | 地空学院物理类课程资料整理 | 📝 持续更新 |
 | **[Tournament-Manager]** | 用于辅助社团线下比赛的积分与对阵工具 | 🛠️ 重构中 |
+| **[Campus-Meteorology]** | 结合校园地形建模、机器学习的模拟气象场构建项目 | 🏗️ 持续攻关 |
 
 ### 🌐 学习之外
 
@@ -59,6 +60,20 @@
   <img src="https://img.shields.io/badge/Supercell-Clash_of_Clans-734222?style=flat" alt="COC" />
   <img src="https://img.shields.io/badge/Supercell-Clash_Royale-1E90FF?style=flat" alt="CR" />
   <img src="https://img.shields.io/badge/Supercell-Hay_Day-EDC659?style=flat" alt="HayDay" />
+</p>
+
+---
+
+
+### 🌤️ 气象爱好者 (Weather Enthusiast)
+
+除了空间和星辰，我也将目光投向变幻莫测的地球大气。作为一个对风云变幻充满热情的**硬核“追风人”**：
+- 🌀 **天气现象与预报**: 痴迷于台风（热带气旋）的路径演变、强冷空气（寒潮）的南下爆发，以及降雨降雪等极端天气过程的数值预报与复盘分析。
+- 🛠️ **校园地面气象观测**: 亲自动手进行软硬件选型与实地布设，正在逐步**搭建地面气象观测站**。利用温压湿风传感器与数据采集模块，建立起属于自己的微尺度高密度实时观测小网络。
+
+<p align="left">
+  <img src="https://img.shields.io/badge/Weather-Typhoon_%26_Meteorology-1E90FF?style=flat" alt="Typhoon" />
+  <img src="https://img.shields.io/badge/Obs-Campus__Weather__Station-008080?style=flat" alt="WeatherStation" />
 </p>
 
 ---
