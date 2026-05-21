@@ -15,8 +15,20 @@
 
 ### 📊 GitHub 统计看板
 
-[![Anurag's GitHub stats](https://github-readme-stats.vercel.app/apilixiang0622anuraghazra)](https://github.com/anuraghazra/github-readme-stats)
-![Anurag's GitHub stats](https://github-readme-stats.vercel.app/apilixiang0622anuraghazra&show=reviews,discussions_started,discussions_answered,prs_merged,prs_merged_percentage)
+### 📊 GitHub 统计看板
+
+<table align="center">
+  <tr>
+    <td align="center" style="border: none;">
+      <img src="https://github-readme-stats.cn/api?username=lixiang0622&show_icons=true&hide=issues&theme=buefy&include_all_commits=true" alt="GitHub Stats" width="400px" />
+    </td>
+  </tr>
+  <tr>
+    <td align="center" style="border: none;">
+      <img src="https://github-readme-stats.cn/api/top-langs/?username=lixiang0622&layout=compact&theme=buefy&hide=html,css" alt="Top Langs" width="400px" />
+    </td>
+  </tr>
+</table>
 
 
 ### 🚀 正在进行的项目
