@@ -15,9 +15,9 @@
 
 ### 📊 GitHub 统计看板
 
-<table align="center">
+
 [![Anurag's GitHub stats](https://github-readme-stats.vercel.app/api?lixiang0622=anuraghazra)](https://github.com/anuraghazra/github-readme-stats)
-</table>
+
 
 ### 🚀 正在进行的项目
 
