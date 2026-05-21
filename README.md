@@ -16,15 +16,16 @@
 
 ### 📊 GitHub 统计看板
 
+
 <table align="center">
   <tr>
     <td align="center" style="border: none;">
-      <img src="https://github-readme-stats.vercel.app/api?username=lixiang0622&show_icons=true&hide=issues&theme=buefy&include_all_commits=true" alt="GitHub Stats" width="400px" />
+      <img src="https://github-profile-summary-cards.vercel.app/api/cards/profile-details?username=lixiang0622&theme=git_dimmed" alt="GitHub Stats" width="500px" />
     </td>
   </tr>
   <tr>
     <td align="center" style="border: none;">
-      <img src="https://github-readme-stats.vercel.app/api/top-langs/?username=lixiang0622&layout=compact&theme=buefy&hide=html,css" alt="Top Langs" width="400px" />
+      <img src="https://github-profile-summary-cards.vercel.app/api/cards/most-commit-language?username=lixiang0622&theme=git_dimmed" alt="Top Langs" width="500px" />
     </td>
   </tr>
 </table>
