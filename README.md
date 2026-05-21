@@ -52,6 +52,7 @@
 - **QQ:** `1638332963`
 - **Email:** `lixiang230742@mail.ustc.edu.cn`
 - **Blog:** https://icourse.club/user/10141
+- **Chess.com:** www.chess.com/member/lixiang230742
 - **lichess:** https://lichess.org/@/lixiang23
 - **Location:** 合肥, 中国
 
