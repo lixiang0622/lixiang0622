@@ -19,7 +19,7 @@
 [![lixiang0622's GitHub stats](https://github-readme-stats-weld-phi-22.vercel.app/api?username=lixiang0622&show_icons=true)](https://github.com/anuraghazra/github-readme-stats)  
 
 
-<img src="https://github-readme-stats-weld-phi-22.vercel.app/api/top-langs/?username=50829&layout=compact
+<img src="https://github-readme-stats-weld-phi-22.vercel.app/api/top-langs/?username=50829&layout=compact" />
 
 ### 🚀 正在进行的项目
 
