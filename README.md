@@ -16,19 +16,10 @@
 
 ### 📊 GitHub 统计看板
 
+[![lixiang0622's GitHub stats](https://github-readme-stats-weld-phi-22.vercel.app/api?username=lixiang0622&show_icons=true)](https://github.com/anuraghazra/github-readme-stats)  
 
-<table align="center">
-  <tr>
-    <td align="center" style="border: none;">
-      <img src="https://github-profile-summary-cards.vercel.app/api/cards/profile-details?username=lixiang0622&theme=git_dimmed" alt="GitHub Stats" width="500px" />
-    </td>
-  </tr>
-  <tr>
-    <td align="center" style="border: none;">
-      <img src="https://github-profile-summary-cards.vercel.app/api/cards/most-commit-language?username=lixiang0622&theme=git_dimmed" alt="Top Langs" width="500px" />
-    </td>
-  </tr>
-</table>
+
+<img src="https://github-readme-stats-weld-phi-22.vercel.app/api/top-langs/?username=50829&layout=compact
 
 ### 🚀 正在进行的项目
 
