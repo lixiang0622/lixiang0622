@@ -58,7 +58,7 @@
 <p align="left">
   <img src="https://img.shields.io/badge/Supercell-Clash_of_Clans-734222?style=flat" alt="COC" />
   <img src="https://img.shields.io/badge/Supercell-Clash_Royale-1E90FF?style=flat" alt="CR" />
-  <img src="https://img.shields.io/badge/Supercell-Hay_Day wheat-EDC659?style=flat" alt="HayDay" />
+  <img src="https://img.shields.io/badge/Supercell-Hay_Day-EDC659?style=flat" alt="HayDay" />
 </p>
 
 ---
