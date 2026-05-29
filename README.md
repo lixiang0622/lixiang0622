@@ -85,10 +85,6 @@
 - 🚇 **地铁与轨道交通**: 热衷于研究城市地铁线网规划以及各大城市轨道交通系统的拓扑结构。
 - 🚄 **中国高铁**: 惊叹于大国重器的工业之美，痴迷于中国高速铁路网的高效排班、动车组交路以及枢纽站场的设计细节。
 
-<p align="left">
-  <img src="https://img.shields.io/badge/Transit-Metro_%26_Bus-008000?style=flat&logo=transit&logoColor=white" alt="Transit" />
-  <img src="https://img.shields.io/badge/Speed-High__Speed__Rail-EE0000?style=flat" alt="HSR" />
-</p>
 
 ---
 
